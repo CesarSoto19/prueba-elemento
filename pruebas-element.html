@@ -1,0 +1,63 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="pruebas-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <paper-input label="Nombre" 
+    type="text"
+    pattern="[A-z]{1-6}"
+    auto-validate
+    error-message="me la pelas"
+    value="{{nombre}}"
+    required>
+  </paper-input>
+   
+   <paper-button rised on-click="save">Guardar</paper-button>
+   <paper-button rised on-click="cancel">Cancelar </paper-button>
+  </template>
+
+  <script>
+    /**
+     * `pruebas-element`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PruebasElement extends Polymer.Element {
+      static get is() { return 'pruebas-element'; }
+      
+      static get properties() {
+        return {
+            nombre:{
+            type: String,
+            notify: true,
+            reflectToAttribute:true
+          },
+        };
+      }
+
+      save() {
+        this.dispatchEvent(new CustomEvent('save-custom-event',
+          {detail: this.nombre, bubbles: true, composed: true}));
+    }
+
+      cancel() {
+        this.dispatchEvent(new CustomEvent('cancel-event-event',
+          { detail: 'btn-cancel', bubbles: true, composed: true }));
+      
+         }
+      
+      }
+
+    window.customElements.define(PruebasElement.is, PruebasElement);
+  </script>
+</dom-module>
